@@ -8,7 +8,7 @@ namespace MiniProject1
         static void Main(string[] args)
         {
             Address add1 = new Address("Rumuńska", "25A", "Michałowice", "Polska", "05-816"); 
-            Address add2 = new Address("Tomcia Palucha", "2", "9", "Warszawa", "Polska", "02-495");
+            Address add2 = new Address("Tomcia Palucha", "2", "9", "Warszawa", "Polska", "02-495"); //Wywołanie konstruktora przyjmującego atrybut opcjonalny
             Console.WriteLine("add2 flat number: " + add2.FlatNumber); //Wypisanie atrybutu opcjonalnego klasy 'Address'.
 
             Consignment c1 = new Consignment(23.5);
@@ -18,11 +18,10 @@ namespace MiniProject1
             Shipment s = new Shipment(add1, add2, new List<Consignment> { c1 });
             s.Consignments.Add(p1); //Dodanie kolejnej wartości do atrybutu powtarzalnego.
 
-            Console.WriteLine("Shipment cost for consignemtn and package = {0}", s.Cost); //s.Cost wywołuje atrybut Price z klasy Package dla p1 i Price z klasy Consignment dla c1
+            Console.WriteLine("Price for consignment = {0}", c1.Price); 
             s.Consignments.Remove(p1);
             s.Consignments.Add(c2);
-            Console.WriteLine("Shipment cost for consignemtn and package = {0}", s.Cost); //s.Cost wywołuje atrybut Price z klasy Consignment dla obu elementów
-
+            Console.WriteLine("Price for package = {0}", p1.Price); // Wywołanie przesłoniętego atrybutu
             Console.WriteLine("Show sender address:\n{0}", s.SenderAddress.FullAddress); //Wypisanie atrybutu pochodnego klasy 'Address' dla atrybutu złożonego klasy 'Shipment'.
 
             Console.WriteLine("Weight of all consignments {0}", Consignment.GetAllWeightsSum()); //Wywołanie metody klasowej.

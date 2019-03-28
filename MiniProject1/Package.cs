@@ -11,6 +11,7 @@ namespace MiniProject1
         public double Length { get; set; }
         public double Height{ get; set; }
         public double Dimension { get { return Width * Length * Height; } }
+       
         public override double Price //Przesłonięcie atrybutu Price z klasy Consignment
         {
             get { return (Dimension/100) * base.Price; }
