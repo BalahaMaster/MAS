@@ -7,8 +7,8 @@ namespace MiniProject1
     {
         static void Main(string[] args)
         {
-            Address add1 = new Address("Rumuńska", "25A", "Michałowice", "Polska", "05-816"); 
-            Address add2 = new Address("Tomcia Palucha", "2", "9", "Warszawa", "Polska", "02-495"); //Wywołanie konstruktora przyjmującego atrybut opcjonalny
+            Address add1 = new Address("Liliowa", "25A", "Warszawa", "Polska", "05-666");
+            Address add2 = new Address("Tulipanowa", "2", "9", "Olsztyn", "Polska", "21-370"); //Wywołanie konstruktora przyjmującego atrybut opcjonalny
             Console.WriteLine("add2 flat number: " + add2.FlatNumber); //Wypisanie atrybutu opcjonalnego klasy 'Address'.
 
             Consignment c1 = new Consignment(23.5);
