@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiniProject2
 {
-    class Association
+    public class Association
     {
         public static Dictionary<Type, Association> LegalAssociations { get; set; }
         public Type StartClassifier { get; set; }
@@ -14,7 +14,7 @@ namespace MiniProject2
         {
             StartClassifier = startClassifier;
             EndClassifier = endClassifier;
-            Role = role
+            Role = role;
         }
 
     }

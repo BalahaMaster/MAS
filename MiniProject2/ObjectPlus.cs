@@ -10,7 +10,7 @@ namespace MiniProject2
 {
     //ObjectPlus jest to klasa zarządzająca ekstensją
     [Serializable]
-    class ObjectPlus
+    public class ObjectPlus
     {
         //Kontener przechowujący ekstensjem
         public static Dictionary<Type, IList> Extensions
