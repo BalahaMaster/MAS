@@ -5,7 +5,7 @@ using System.Text;
 namespace MiniProject2
 {
     [Serializable]
-    class Address
+    public class Address : ObjectPlusPlus
     {
         public string StreetName { get; }
         public string FlatNumber { get; }
