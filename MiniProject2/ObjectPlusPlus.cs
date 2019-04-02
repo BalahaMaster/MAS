@@ -7,6 +7,7 @@ namespace MiniProject2
     [Serializable]
     public class ObjectPlusPlus : ObjectPlus
     {
+        public static List<Association> LegalAssociations { get; set; }
         public Dictionary<string, Dictionary<object, ObjectPlusPlus>> Constrains { get; set; }
         private static HashSet<ObjectPlusPlus> AllParts { get; set; }
         
@@ -31,7 +32,7 @@ namespace MiniProject2
 
         private void AddPart()
         {
-
+            
         }
     }
 }

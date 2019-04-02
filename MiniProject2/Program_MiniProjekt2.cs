@@ -7,6 +7,7 @@ namespace MiniProject2
     {
         static void Main(string[] args)
         {
+            
             Address add1 = new Address("Liliowa", "25A", "Warszawa", "Polska", "05-666");
             Address add2 = new Address("Tulipanowa", "2", "9", "Olsztyn", "Polska", "21-370");
 
