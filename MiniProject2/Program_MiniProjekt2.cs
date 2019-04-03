@@ -36,7 +36,7 @@ namespace MiniProject2
             Connection c1 = new Connection("Warszawa-Płock", 120);
             Connection c2 = new Connection("Płock-Olsztyn", 220);
 
-            ShipmentConnection sc1 = new ShipmentConnection("Warszawa-Płock", new DateTime(2019, 04, 26, 10, 0, 0), new DateTime(2019, 04, 26, 6, 0, 0));
+            ShipmentConnection sc1 = new ShipmentConnection(sh1, c1, +"Warszawa-Płock", new DateTime(2019, 04, 26, 10, 0, 0), new DateTime(2019, 04, 26, 6, 0, 0));
             ShipmentConnection sc2 = new ShipmentConnection("Płock=Olsztyn", new DateTime(2019, 04, 26, 18, 0, 0), new DateTime(2019, 04, 26, 10, 0, 0));
 
             ShipmentConnection sc3 = new ShipmentConnection("Warszawa-Płock", new DateTime(2019, 04, 27, 10, 0, 0), new DateTime(2019, 04, 27, 6, 0, 0));
