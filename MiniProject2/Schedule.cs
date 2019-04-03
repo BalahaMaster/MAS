@@ -8,10 +8,9 @@ namespace MiniProject2
     class Schedule : ObjectPlusPlus
     {
         public Dictionary<DateTime, DateTime> Etd_Eta { get; set; } 
-
         public Schedule(Connection connection) : base()
         {
-            AddConstrain(GetAssociation(Role.ScheduleConnection), connection);
+            connection.AddPart(GetAssociation(Role.ConnectionShedule), this);
             Etd_Eta = new Dictionary<DateTime, DateTime>();
         }
 
@@ -19,7 +18,7 @@ namespace MiniProject2
         {
             List<ObjectPlusPlus> allConstrains = GetConsrtains(Role.ScheduleConnection).ToList();
             Connection connection = (Connection) allConstrains.First();
-            return "Scheduler for " + connection;
+            return "Schedule for " + connection;
         }
     }
 }

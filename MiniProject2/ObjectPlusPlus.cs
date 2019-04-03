@@ -94,11 +94,11 @@ namespace MiniProject2
             AddConstrain(association, constrainedObject, 2);
         }
 
-        private void AddPart(Association association, ObjectPlusPlus partObject)
+        public void AddPart(Association association, ObjectPlusPlus partObject)
         {
             if(AllParts.Contains(partObject))
             {
-                throw new Exception("Obiekt część już jest powiązany z całością");
+                throw new Exception("Given part object is already constrained");
             }
             AddConstrain(association, partObject);
             AllParts.Add(partObject);
@@ -165,37 +165,26 @@ namespace MiniProject2
         }
         public static void DefineAssociations()
         {
-            List<Association> definedAssociation = new List<Association>();
-
-            Association s_a1 = new Association(typeof(Shipment), typeof(Address), 1, Role.ShipmentSenderAddress);
-            Association s_a2 = new Association(typeof(Shipment), typeof(Address), 1, Role.ShipmentPickupAddress);
-            Association c_a1 = new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionStartAddress);
-            Association c_a2 = new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionEndAddress);
-            definedAssociation.Add(s_a1);
-            definedAssociation.Add(s_a2);
-            definedAssociation.Add(c_a1);
-            definedAssociation.Add(c_a2);
+            AddAssociation(new Association(typeof(Shipment), typeof(Address), 1, Role.ShipmentSenderAddress));
+            AddAssociation(new Association(typeof(Shipment), typeof(Address), 1, Role.ShipmentPickupAddress));
+            AddAssociation(new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionStartAddress));
+            AddAssociation(new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionEndAddress));
 
             Association s_sc = new Association(typeof(Shipment), 1, typeof(ShipmentConnection), -1, Role.Shipment_ShipmentConnection, Role.ShipmentConnection_Shipment);
-            definedAssociation.Add(s_sc);
-            definedAssociation.Add(s_sc.CreateReversedAssociation());
+            AddAssociation(s_sc);
+            AddAssociation(s_sc.CreateReversedAssociation());
 
             Association c_sc = new Association(typeof(Connection), 1, typeof(ShipmentConnection), -1, Role.Connection_ShipmentConnection, Role.ShipmentConnection_Connection);
-            definedAssociation.Add(c_sc);
-            definedAssociation.Add(c_sc.CreateReversedAssociation());
+            AddAssociation(c_sc);
+            AddAssociation(c_sc.CreateReversedAssociation());
 
             Association shi_cons = new Association(typeof(Shipment), 1, typeof(Consignment), -1, Role.ShipmentContainsConsignments, Role.ConsignmentsContainedByShipment);
-            definedAssociation.Add(shi_cons);
-            definedAssociation.Add(shi_cons.CreateReversedAssociation());
+            AddAssociation(shi_cons);
+            AddAssociation(shi_cons.CreateReversedAssociation());
 
             Association con_sch = new Association(typeof(Connection), 1, typeof(Schedule), 1, Role.ConnectionShedule, Role.ScheduleConnection);
-            definedAssociation.Add(con_sch);
-            definedAssociation.Add(con_sch.CreateReversedAssociation());
-
-            foreach(Association ass in definedAssociation)
-            {
-                AddAssociation(ass);
-            }
+            AddAssociation(con_sch);
+            AddAssociation(con_sch.CreateReversedAssociation());
         }
     }
 }

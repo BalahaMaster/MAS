@@ -8,7 +8,6 @@ namespace MiniProject2
     {
         public string Name { get; set; }
         public double Distance { get; set; }
-        //public List<ShipmentConnection> Executions { get; set; }
 
         public Connection(string name, double distance) : base()
         {

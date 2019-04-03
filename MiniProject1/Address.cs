@@ -8,7 +8,7 @@ namespace MiniProject1
     class Address : ObjectPlus
     {
         public string StreetName { get; }
-        public string FlatNumber { get; } //Atrybut opcjonalny
+        public string FlatNumber { get; }
         public string StreetNumber { get; }
         public string City { get; }
         public string Country { get; }
