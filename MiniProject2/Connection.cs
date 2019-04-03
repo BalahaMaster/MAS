@@ -20,5 +20,15 @@ namespace MiniProject2
         {
             return Name;
         }
+
+        public void AddStartAddress(Address address)
+        {
+            AddConstrain(GetAssociation(Role.ConnectionStartAddress), address);
+        }
+
+        public void AddEndAddress(Address address)
+        {
+            AddConstrain(GetAssociation(Role.ConnectionEndAddress), address);
+        }
     }
 }

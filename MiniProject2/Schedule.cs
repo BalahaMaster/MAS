@@ -9,8 +9,9 @@ namespace MiniProject2
     {
         public Dictionary<DateTime, DateTime> Etd_Eta { get; set; } 
 
-        public Schedule() : base()
+        public Schedule(Connection connection) : base()
         {
+            AddConstrain(GetAssociation(Role.ScheduleConnection), connection);
             Etd_Eta = new Dictionary<DateTime, DateTime>();
         }
 
