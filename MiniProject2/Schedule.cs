@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MiniProject2
 {
-    class Schedule
+    class Schedule : ObjectPlusPlus
     {
-        public DateTime ETD { get; set; }
-        public DateTime ETA { get; set; }
+        public Dictionary<DateTime, DateTime> Etd_Eta { get; set; } 
+
+        public Schedule() : base()
+        {
+            Etd_Eta = new Dictionary<DateTime, DateTime>();
+        }
+
+        public override string ToString()
+        {
+            List<ObjectPlusPlus> allConstrains = GetConsrtains(Role.ScheduleConnection).ToList();
+            Connection connection = (Connection) allConstrains.First();
+            return "Scheduler for " + connection;
+        }
     }
 }

@@ -21,7 +21,6 @@ namespace MiniProject2
             EndMultiplicityLimit = endMultiplicityLimit;
             Role = role;
         }
-
         public Association(Type startClassifier, int startMultiplicityLimit, Type endClassifier, int endMultiplicityLimit, Role role, Role reverseRole) : this(startClassifier, endClassifier, endMultiplicityLimit, role)
         {
             ReverseRole = reverseRole;

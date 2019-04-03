@@ -23,11 +23,11 @@ namespace MiniProject2
                     temp = StreetNumber;
                 else
                     temp = StreetNumber + "\\" + FlatNumber;
-                return String.Format("{0} {1}\n{2} {3}\n{4}", StreetName, temp, City, PostalCode, Country);
+                return String.Format("{0} {1} {2} {3} {4}", StreetName, temp, City, PostalCode, Country);
             }
         }
 
-        public Address(string streetName, string streetNumber, string city, string country, string postalCode)
+        public Address(string streetName, string streetNumber, string city, string country, string postalCode) : base()
         {
             StreetName = streetName ?? throw new ArgumentNullException(nameof(streetName));
             StreetNumber = streetNumber ?? throw new ArgumentNullException(nameof(streetNumber));
@@ -39,6 +39,11 @@ namespace MiniProject2
         public Address(string streetName, string streetNumber, string flatNumber, string city, string country, string postalCode) : this(streetName, streetNumber, city, country, postalCode)
         {
             FlatNumber = flatNumber?? throw new ArgumentNullException(nameof(postalCode));
+        }
+
+        public override String ToString()
+        {
+            return FullAddress;
         }
     }
 }
