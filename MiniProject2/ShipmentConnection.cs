@@ -7,21 +7,23 @@ namespace MiniProject2
 {
     class ShipmentConnection : ObjectPlusPlus
     {
-        public Shipment Shipment { get; set; }
-        public Connection Connection { get; set; }
+        public string Name { get; set; }
         public DateTime ATA { get; set; }
         public DateTime ATD { get; set; }
         public DateTime ETA { get; set; }
         public DateTime ETD { get; set; }
 
-        public ShipmentConnection(Shipment shipment, Connection connection, DateTime aTA, DateTime aTD, DateTime eTA, DateTime eTD) : base()
+        public ShipmentConnection(string name, DateTime ata, DateTime atd, DateTime eta, DateTime etd) : this(name, eta, etd)
         {
-            Shipment = shipment ?? throw new ArgumentNullException(nameof(shipment));
-            Connection = connection ?? throw new ArgumentNullException(nameof(connection));
-            ATA = aTA;
-            ATD = aTD;
-            ETA = eTA;
-            ETD = eTD;
+            ATA = ata;
+            ATD = atd;
+        }
+
+        public ShipmentConnection(string name, DateTime eta, DateTime etd) : base()
+        {
+            Name = name;
+            ETA = eta;
+            ETD = etd;
         }
 
         public override string ToString()

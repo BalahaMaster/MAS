@@ -17,5 +17,15 @@ namespace MiniProject2
         {
             return Name;       
         }
+
+        public void AddPickupAddress(Address address)
+        {
+            AddConstrain(this.GetAssociation(Role.ShipmentPickupAddress), address);
+        }
+
+        public void AddSenderAddress(Address address)
+        {
+            AddConstrain(this.GetAssociation(Role.ShipmentSenderAddress), address);
+        }
     }
 }

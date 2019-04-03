@@ -7,13 +7,14 @@ namespace MiniProject2
     public class Connection : ObjectPlusPlus
     {
         public string Name { get; set; }
-        public Address StartAddress{ get; set; }
-        public Address EndAddress { get; set; }
         public double Distance { get; set; }
         //public List<ShipmentConnection> Executions { get; set; }
 
-        public Connection() : base()
-        {}
+        public Connection(string name, double distance) : base()
+        {
+            Name = name;
+            Distance = distance;
+        }
 
         public override string ToString() 
         {
