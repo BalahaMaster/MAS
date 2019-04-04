@@ -32,13 +32,22 @@ namespace MiniProject2
             }
         }
         public List<Execution> Executions
-        { 
+        {
             get
             {
-                return (List<Execution>) GetLinks(Role.Shipment_Execution).ToList().ConvertAll(x => (Execution) x);
+                return (List<Execution>)GetLinks(Role.Shipment_Execution).ToList().ConvertAll(x => (Execution)x);
             }
-            private set
-            { }
+            set
+            {
+                foreach (Execution e in GetLinks(Role.Shipment_Execution))
+                {
+                    RemoveLink(GetAssociation(Role.Shipment_Execution), e);
+                }
+                foreach (Execution e in value)
+                {
+                    AddLink(GetAssociation(Role.Shipment_Execution), e);
+                }
+            }
         }
         public Shipment(string name) : base()
         {

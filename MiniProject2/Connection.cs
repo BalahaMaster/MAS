@@ -32,22 +32,30 @@ namespace MiniProject2
             }
         }
         public List<Execution> Executions
-        { 
+        {
             get
             {
-                return (List<Execution>) GetLinks(Role.Connection_Execution).ToList().ConvertAll(x => (Execution) x);
+                return (List<Execution>)GetLinks(Role.Connection_Execution).ToList().ConvertAll(x => (Execution)x);
             }
-            private set
-            { }
+            set
+            {
+                foreach(Execution e in GetLinks(Role.Shipment_Execution))
+                {
+                    RemoveLink(GetAssociation(Role.Connection_Execution), e);
+                }
+                foreach(Execution e in value)
+                {
+                    AddLink(GetAssociation(Role.Connection_Execution), e);
+                }
+            }
         }
+
         public Schedule Schedule
         {
             get
             {
                 return (Schedule) GetLinks(Role.ConnectionShedule).FirstOrDefault();
             }
-            private set
-            { }
         }
         public Connection(string name, double distance) : base()
         {
@@ -58,7 +66,7 @@ namespace MiniProject2
 
         public void CreateSchedule()
         {
-            Schedule = Schedule.CreateSchedule(this);
+            Schedule.CreateSchedule(this);
         }
 
         public override string ToString() 

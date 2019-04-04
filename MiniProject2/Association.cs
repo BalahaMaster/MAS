@@ -31,5 +31,10 @@ namespace MiniProject2
         {
             return new Association(EndClassifier, EndMultiplicityLimit, StartClassifier, StartMultiplicityLimit, ReverseRole, Role);
         }
+
+        public Association GetReversedAssociation()
+        {
+            return ObjectPlusPlus.LegalAssociations.FirstOrDefault(x => x.Role.Equals(ReverseRole));
+        }
     }
 }

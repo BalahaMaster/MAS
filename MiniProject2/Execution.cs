@@ -7,12 +7,15 @@ namespace MiniProject2
 {
     public class Execution : ObjectPlusPlus
     {
-        public string Name { get; set; }
         public Shipment Shipment
         {
             get
             {
                 return (Shipment) GetLinks(Role.Execution_Shipment).FirstOrDefault();
+            }
+            set
+            {
+                AddLink(GetAssociation(Role.Execution_Shipment), value);
             }
         }
         public Connection Connection
@@ -21,23 +24,24 @@ namespace MiniProject2
             {
                 return (Connection) GetLinks(Role.Execution_Connection).FirstOrDefault();
             }
+            set
+            {
+                AddLink(GetAssociation(Role.Execution_Connection), value);
+            }
         }
         public DateTime ATA { get; set; }
         public DateTime ATD { get; set; }
         public DateTime ETA { get; set; }
         public DateTime ETD { get; set; }
 
-        public Execution(Shipment shipment, Connection connection, string name, DateTime ata, DateTime atd, DateTime eta, DateTime etd) : this(shipment, connection, name, eta, etd)
+        public Execution(DateTime etd, DateTime eta, DateTime atd, DateTime ata) : this(etd, eta)
         {
             ATA = ata;
             ATD = atd;
         }
 
-        public Execution(Shipment shipment, Connection connection, string name, DateTime eta, DateTime etd) : base()
+        public Execution(DateTime etd, DateTime eta) : base()
         {
-            AddLink(GetAssociation(Role.Execution_Shipment), shipment);
-            AddLink(GetAssociation(Role.Execution_Connection), connection);
-            Name = name;
             ETA = eta;
             ETD = etd;
         }

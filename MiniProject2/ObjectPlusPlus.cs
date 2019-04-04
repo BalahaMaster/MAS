@@ -21,7 +21,7 @@ namespace MiniProject2
     [Serializable]
     public class ObjectPlusPlus : ObjectPlus
     {
-        private static List<Association> LegalAssociations { get; set; } 
+        public static List<Association> LegalAssociations { get; private set; } 
         private Dictionary<Role, Dictionary<object, ObjectPlusPlus>> Links { get; set; } = new Dictionary<Role, Dictionary<object, ObjectPlusPlus>>();
         private static HashSet<ObjectPlusPlus> AllParts { get; set; } = new HashSet<ObjectPlusPlus>();
         private void AddLink(Association association, ObjectPlusPlus linkedObject, int counter)
@@ -54,7 +54,11 @@ namespace MiniProject2
             }
             if (!roleLinks.ContainsKey(linkedObject))
             {
-                Association reverseAssociation = LegalAssociations.FirstOrDefault(x => x.Role.Equals(association.ReverseRole));
+                Association reverseAssociation = association.GetReversedAssociation();
+                if(reverseAssociation == null)
+                {
+                    return;
+                }
                 switch (association.EndMultiplicityLimit) 
                 {
                     case -1:
@@ -87,6 +91,42 @@ namespace MiniProject2
         public void AddLink(Association association, ObjectPlusPlus linkedObject)
         {
             AddLink(association, linkedObject, 2);
+        }
+
+        private void RemoveLink(Association association, ObjectPlusPlus linkedObject, int counter)
+        {
+            if (counter < 1)
+            {
+                return;
+            }
+            if (linkedObject == null)
+            {
+                return;
+            }
+            if (association == null)
+            {
+                return;
+            }
+            if (!LegalAssociations.Any(x => x.Role.Equals(association.Role)))
+            {
+                throw new Exception("Association is not legal");
+            }
+            Dictionary<object, ObjectPlusPlus> roleLinks;
+            Links.TryGetValue(association.Role, out roleLinks);
+            if (roleLinks == null)
+            {
+                return;
+            }
+            if(roleLinks.ContainsKey(linkedObject))
+            {
+                roleLinks.Remove(linkedObject);
+                RemoveLink(association.GetReversedAssociation(), this, counter - 1);
+            }
+        }
+
+        public void RemoveLink(Association association, ObjectPlusPlus linkedObject)
+        {
+            RemoveLink(association, linkedObject, 2);
         }
 
         public void AddPart(Association association, ObjectPlusPlus partObject)
