@@ -11,45 +11,40 @@ namespace MiniProject2
             ObjectPlusPlus.DefineAssociations();
 
             Shipment sh1 = new Shipment("Shipment 1");
-            Address add1 = new Address("Liliowa", "25A", "Warszawa", "Polska", "05-666");
-            Address add2 = new Address("Tulipanowa", "2", "9", "Olsztyn", "Polska", "21-370");
-
-            try
-            {
-                sh1.GetAssociation(Role.ConnectionShedule); // Bład - nie ma zdefiniowanej asocjacji dla tej roli i tego obiektu
-            }
-            catch (Exception e) {  System.Console.WriteLine(e); }
-
-            sh1.AddSenderAddress(add1); // Asocjacja binarna skierowana
-            sh1.ShowConstrains(Role.ShipmentPickupAddress);
-            try
-            {
-                sh1.AddConstrain(sh1.GetAssociation(Role.ShipmentPickupAddress), add2); // Bład - Shipment już jest powiązany z Address dla tej roli
-            }
-            catch(Exception e) { System.Console.WriteLine(e); }
-            sh1.AddConstrain(sh1.GetAssociation(Role.ShipmentSenderAddress), add2);
-            sh1.ShowConstrains(Role.ShipmentSenderAddress);
-            
-
-            Address add3 = new Address("Kasztanowa", "13", "Płock", "Polska", "01-234");
-
-            Connection c1 = new Connection("Warszawa-Płock", 120);
-            Connection c2 = new Connection("Płock-Olsztyn", 220);
-
-            ShipmentConnection sc1 = new ShipmentConnection(sh1, c1, +"Warszawa-Płock", new DateTime(2019, 04, 26, 10, 0, 0), new DateTime(2019, 04, 26, 6, 0, 0));
-            ShipmentConnection sc2 = new ShipmentConnection("Płock=Olsztyn", new DateTime(2019, 04, 26, 18, 0, 0), new DateTime(2019, 04, 26, 10, 0, 0));
-
-            ShipmentConnection sc3 = new ShipmentConnection("Warszawa-Płock", new DateTime(2019, 04, 27, 10, 0, 0), new DateTime(2019, 04, 27, 6, 0, 0));
-            ShipmentConnection sc4 = new ShipmentConnection("Płock=Olsztyn", new DateTime(2019, 04, 27, 18, 0, 0), new DateTime(2019, 04, 27, 10, 0, 0));
-
-            sh1.AddConstrain(sh1.GetAssociation(Role.Shipment_ShipmentConnection), sc1); 
-            sh1.AddConstrain(sh1.GetAssociation(Role.Shipment_ShipmentConnection), sc2); // dodanie powiązania asocjacji z atrybutem do obiektu sh1
-            c1.AddConstrain(c1.GetAssociation(Role.Connection_ShipmentConnection), sc1); // dodanie powiązania asocjacji z atrybutem do obiektu c1
-            c2.AddConstrain(c2.GetAssociation(Role.Connection_ShipmentConnection), sc2);
-            c1.AddConstrain(c1.GetAssociation(Role.Connection_ShipmentConnection), sc3);
-
             Shipment sh2 = new Shipment("Shipment 2");
 
+            Address add1 = new Address("Liliowa", "25A", "Warszawa", "Polska", "05-666"); 
+            Address add2 = new Address("Tulipanowa", "2", "9", "Olsztyn", "Polska", "21-370");
+            Address add3 = new Address("Kasztanowa", "13", "Płock", "Polska", "01-234");
+
+            sh1.PickupAddress = add2; // Asocjacja binarna skierowana Shipment -> Adres
+            sh1.SenderAddress = add1;
+
+            Connection c1 = new Connection("Warszawa-Płock", 120);
+            c1.StartAddress = add1;
+            c1.EndAddress = add3;
+            Connection c2 = new Connection("Płock-Olsztyn", 220);
+            c2.StartAddress = add3;
+            c2.EndAddress = add2;
+            Connection c3 = new Connection("Płock-Warszawa", 120);
+            c3.StartAddress = add3;
+            c3.EndAddress = add1;
+
+            Execution sc1 = new Execution(sh1, c1, c1.Name, new DateTime(2019, 04, 26, 10, 0, 0), new DateTime(2019, 04, 26, 6, 0, 0)); // Asocjacja z atrybutem pomiędzy shipment i connection
+            Execution sc2 = new Execution(sh1, c2, c2.Name, new DateTime(2019, 04, 26, 18, 0, 0), new DateTime(2019, 04, 26, 10, 0, 0)); // Asocjacja z atrybutem pomiędzy shipment i connection
+            Execution sc3 = new Execution(sh2, c2, c2.Name, etd: new DateTime(2019, 05, 02, 12, 0, 0), eta: new DateTime(2019, 05, 02, 14, 0, 0));
+            sh1.ShowLinks(Role.Shipment_Execution);
+            c2.ShowLinks(Role.Connection_Execution);
+
+
+            Consignment csg1 = new Consignment(2.5);
+            System.Console.WriteLine(csg1.Shipment);
+
+            c1.CreateSchedule();
+            c1.Schedule.ShowLinks(Role.ScheduleConnection);
+            c1.ShowLinks(Role.ConnectionShedule);
+            c1.CreateSchedule();
+            
         }        
     }
 }

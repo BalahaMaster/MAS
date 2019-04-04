@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MiniProject2
@@ -14,7 +15,13 @@ namespace MiniProject2
             get { return 0.5; }
             set { }
         }
-        public Shipment Shipment { get; set; }
+        public Shipment Shipment
+        {
+            get
+            {
+                return (Shipment) GetLinks(Role.ConsignmentsContainedByShipment).FirstOrDefault();
+            }
+        }
         public virtual double Price { get { return Weight * PriceModifier; } } 
 
         public Consignment(double weight) : base()

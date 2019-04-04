@@ -5,20 +5,36 @@ using System.Text;
 
 namespace MiniProject2
 {
-    class Schedule : ObjectPlusPlus
+    public class Schedule : ObjectPlusPlus
     {
         public Dictionary<DateTime, DateTime> Etd_Eta { get; set; } 
-        public Schedule(Connection connection) : base()
+        public Connection Connection
         {
-            connection.AddPart(GetAssociation(Role.ConnectionShedule), this);
+            get
+            {
+               return (Connection) GetLinks(Role.ScheduleConnection).FirstOrDefault();
+            }
+        }
+        private Schedule() : base()
+        {
             Etd_Eta = new Dictionary<DateTime, DateTime>();
+            AddPart(GetAssociation(Role.ScheduleConnection), this);
         }
 
         public override string ToString()
         {
-            List<ObjectPlusPlus> allConstrains = GetConsrtains(Role.ScheduleConnection).ToList();
-            Connection connection = (Connection) allConstrains.First();
+            List<ObjectPlusPlus> allLinks = GetLinks(Role.ScheduleConnection).ToList();
+            Connection connection = (Connection) allLinks.First();
             return "Schedule for " + connection;
+        }
+
+        public static Schedule CreateSchedule(Connection connection)
+        {
+            if(connection == null)
+            {
+                throw new Exception("Cannot create schedule for not existing Connection");
+            }
+            return new Schedule();
         }
     }
 }

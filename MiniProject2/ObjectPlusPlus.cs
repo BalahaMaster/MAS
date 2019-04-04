@@ -12,8 +12,8 @@ namespace MiniProject2
         ShipmentPickupAddress,
         ConnectionStartAddress,
         ConnectionEndAddress,
-        Shipment_ShipmentConnection, ShipmentConnection_Shipment,
-        Connection_ShipmentConnection, ShipmentConnection_Connection,
+        Shipment_Execution, Execution_Shipment,
+        Connection_Execution, Execution_Connection,
         ShipmentContainsConsignments, ConsignmentsContainedByShipment,
         ConnectionShedule, ScheduleConnection,
 
@@ -22,85 +22,80 @@ namespace MiniProject2
     public class ObjectPlusPlus : ObjectPlus
     {
         private static List<Association> LegalAssociations { get; set; } 
-        private Dictionary<Role, Dictionary<object, ObjectPlusPlus>> Constrains { get; set; } = new Dictionary<Role, Dictionary<object, ObjectPlusPlus>>();
+        private Dictionary<Role, Dictionary<object, ObjectPlusPlus>> Links { get; set; } = new Dictionary<Role, Dictionary<object, ObjectPlusPlus>>();
         private static HashSet<ObjectPlusPlus> AllParts { get; set; } = new HashSet<ObjectPlusPlus>();
-        private void AddConstrain(Association association, ObjectPlusPlus constrainedObject, int counter)
+        private void AddLink(Association association, ObjectPlusPlus linkedObject, int counter)
         {
             if (counter < 1)
             {
                 return;
             }
-            // Check if association exists
+            if(linkedObject == null)
+            {
+                return;
+            }
             if (association == null)
             {
                 return;
             }
-            // Check if association is legal
             if (!LegalAssociations.Any(x => x.Role.Equals(association.Role)))
             {
                 throw new Exception("Association is not legal");
             }
-            // Get role constrains for this object
-            Dictionary<object, ObjectPlusPlus> roleConstrains;
-            if (Constrains.ContainsKey(association.Role))
+            Dictionary<object, ObjectPlusPlus> roleLinks;
+            if (Links.ContainsKey(association.Role))
             {
-                roleConstrains = Constrains[association.Role];
+                roleLinks = Links[association.Role];
             }
-            else
+            else 
             {
-                roleConstrains = new Dictionary<object, ObjectPlusPlus>();
-                Constrains.Add(association.Role, roleConstrains);
+                roleLinks = new Dictionary<object, ObjectPlusPlus>();
+                Links.Add(association.Role, roleLinks);
             }
-            // Check if role constrains contains this object
-            if (!roleConstrains.ContainsKey(constrainedObject))
+            if (!roleLinks.ContainsKey(linkedObject))
             {
-                // Get reverse association
                 Association reverseAssociation = LegalAssociations.FirstOrDefault(x => x.Role.Equals(association.ReverseRole));
-                // Add the object if multiplicity allows it
                 switch (association.EndMultiplicityLimit) 
                 {
-                    // For many multiplicity
                     case -1:
-                        roleConstrains.Add(constrainedObject, constrainedObject);
+                        roleLinks.Add(linkedObject, linkedObject);
                         if(reverseAssociation != null)
                         {
-                            constrainedObject.AddConstrain(reverseAssociation, this, counter - 1);
+                            linkedObject.AddLink(reverseAssociation, this, counter - 1);
                         }
                         break;
-                    // For optional
                     case 0:
-                        if(roleConstrains.Count != 0)
+                        if(roleLinks.Count != 0)
                         {
                             throw new Exception("Multiplicity limit has been reached");
                         }
-                        roleConstrains.Add(constrainedObject, constrainedObject);
-                        constrainedObject.AddConstrain(reverseAssociation, this, counter - 1);
+                        roleLinks.Add(linkedObject, linkedObject);
+                        linkedObject.AddLink(reverseAssociation, this, counter - 1);
                         break;
-                    // For exact number limit
                     default: 
-                        if(roleConstrains.Count >= association.EndMultiplicityLimit)
+                        if(roleLinks.Count >= association.EndMultiplicityLimit)
                         {
                             throw new Exception("Multiplicity limit has been reached");  
                         }
-                        roleConstrains.Add(constrainedObject, constrainedObject);
-                        constrainedObject.AddConstrain(reverseAssociation, this, counter - 1);
+                        roleLinks.Add(linkedObject, linkedObject);
+                        linkedObject.AddLink(reverseAssociation, this, counter - 1);
                         break;
                 }
             }
         }
 
-        public void AddConstrain(Association association, ObjectPlusPlus constrainedObject)
+        public void AddLink(Association association, ObjectPlusPlus linkedObject)
         {
-            AddConstrain(association, constrainedObject, 2);
+            AddLink(association, linkedObject, 2);
         }
 
         public void AddPart(Association association, ObjectPlusPlus partObject)
         {
             if(AllParts.Contains(partObject))
             {
-                throw new Exception("Given part object is already constrained");
+                throw new Exception("Given part object is already linked");
             }
-            AddConstrain(association, partObject);
+            AddLink(association, partObject);
             AllParts.Add(partObject);
         }
         public static void AddAssociation(Association association)
@@ -129,38 +124,39 @@ namespace MiniProject2
             return ass;
         }
 
-        public ObjectPlusPlus[] GetConsrtains(Role role)
+        public ObjectPlusPlus[] GetLinks(Role role)
         {
-            if(!Constrains.ContainsKey(role))
+            List<ObjectPlusPlus> roleLinks = new List<ObjectPlusPlus>();
+            if(Links.ContainsKey(role))
             {
-                throw new Exception("There are no constrains for this role");
+                roleLinks = Links[role].Values.ToList();
             }
-            return Constrains[role].Values.ToArray();
+            return roleLinks.ToArray();
         }
 
-        public ObjectPlusPlus GetConsrtainedObject(Role role, Object qualifier)
+        public ObjectPlusPlus GetLinknedObject(Role role, Object qualifier)
         {
-            if(!Constrains.ContainsKey(role))
+            if(!Links.ContainsKey(role))
             {
-                throw new Exception("There are no constrains for this role");
+                throw new Exception("There are no links for this role");
             }
-            if(!Constrains[role].ContainsKey(qualifier))
+            if(!Links[role].ContainsKey(qualifier))
             {
-                throw new Exception("No constrain for this qualifier");
+                return null;
             }
-            return Constrains[role][qualifier];
+            return Links[role][qualifier];
         }
         
-        public void ShowConstrains(Role role)
+        public void ShowLinks(Role role)
         {
-            if(!Constrains.ContainsKey(role))
+            if(!Links.ContainsKey(role))
             {
-                throw new Exception("There are no constrains for this role");
+                System.Console.WriteLine("There are no links for this role");
             }
-            System.Console.WriteLine("{0} constrains for role {1}", this, role);
-            foreach(KeyValuePair<object, ObjectPlusPlus> d in Constrains[role])
+            System.Console.WriteLine("{0} '{1}' links for role {2}", this.GetType(), this, role);
+            foreach(KeyValuePair<object, ObjectPlusPlus> d in Links[role])
             {
-                System.Console.WriteLine("\t"+d.Value);        
+                System.Console.WriteLine(d.Value);        
             }
         }
         public static void DefineAssociations()
@@ -170,11 +166,11 @@ namespace MiniProject2
             AddAssociation(new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionStartAddress));
             AddAssociation(new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionEndAddress));
 
-            Association s_sc = new Association(typeof(Shipment), 1, typeof(ShipmentConnection), -1, Role.Shipment_ShipmentConnection, Role.ShipmentConnection_Shipment);
+            Association s_sc = new Association(typeof(Shipment), 1, typeof(Execution), -1, Role.Shipment_Execution, Role.Execution_Shipment);
             AddAssociation(s_sc);
             AddAssociation(s_sc.CreateReversedAssociation());
 
-            Association c_sc = new Association(typeof(Connection), 1, typeof(ShipmentConnection), -1, Role.Connection_ShipmentConnection, Role.ShipmentConnection_Connection);
+            Association c_sc = new Association(typeof(Connection), 1, typeof(Execution), -1, Role.Connection_Execution, Role.Execution_Connection);
             AddAssociation(c_sc);
             AddAssociation(c_sc.CreateReversedAssociation());
 
