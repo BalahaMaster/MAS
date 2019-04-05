@@ -17,14 +17,14 @@ namespace MiniProject2
             Address add2 = new Address("Tulipanowa", "2", "9", "Olsztyn", "Polska", "21-370");
             Address add3 = new Address("Kasztanowa", "13", "Płock", "Polska", "01-234");
 
-            sh1.PickupAddress = add2; // Asocjacja binarna skierowana Shipment -> Adres
-            sh1.SenderAddress = add1;
+            sh1.AddLink(ObjectPlusPlus.GetAssociation(Role.ShipmentPickupAddress), add2); // asocjacja binarna skierowana
+            sh1.AddLink(ObjectPlusPlus.GetAssociation(Role.ShipmentSenderAddress), add1); 
 
             Connection c1 = new Connection("Warszawa-Płock", 120);
-            c1.StartAddress = add1;
-            c1.EndAddress = add3;
+            c1.AddLink(c1.GetAssociation(Role.ConnectionStartAddress), add1);
+            c1.AddLink(c1.GetAssociation(Role.ConnectionEndAddress), add3);
             Connection c2 = new Connection("Płock-Olsztyn", 220);
-            c2.StartAddress = add3;
+            c2.AddLink(c1.GetAssociation)
             c2.EndAddress = add2;
             Connection c3 = new Connection("Płock-Warszawa", 120);
             c3.StartAddress = add3;

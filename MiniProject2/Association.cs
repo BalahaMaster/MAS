@@ -13,7 +13,6 @@ namespace MiniProject2
         public int EndMultiplicityLimit { get; set; }
         public Role Role { get; set; }
         public Role ReverseRole { get; set; }
-
         public Association(Type startClassifier, Type endClassifier, int endMultiplicityLimit, Role role)
         {
             StartClassifier = startClassifier ?? throw new ArgumentNullException(nameof(startClassifier));
@@ -26,12 +25,10 @@ namespace MiniProject2
             ReverseRole = reverseRole;
             StartMultiplicityLimit = startMultiplicityLimit;
         }
-
         public Association CreateReversedAssociation()
         {
             return new Association(EndClassifier, EndMultiplicityLimit, StartClassifier, StartMultiplicityLimit, ReverseRole, Role);
         }
-
         public Association GetReversedAssociation()
         {
             return ObjectPlusPlus.LegalAssociations.FirstOrDefault(x => x.Role.Equals(ReverseRole));

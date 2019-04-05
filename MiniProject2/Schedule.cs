@@ -8,26 +8,17 @@ namespace MiniProject2
     public class Schedule : ObjectPlusPlus
     {
         public Dictionary<DateTime, DateTime> Etd_Eta { get; set; } 
-        public Connection Connection
-        {
-            get
-            {
-               return (Connection) GetLinks(Role.ScheduleConnection).FirstOrDefault();
-            }
-        }
         private Schedule() : base()
         {
             Etd_Eta = new Dictionary<DateTime, DateTime>();
             AddPart(GetAssociation(Role.ScheduleConnection), this);
         }
-
         public override string ToString()
         {
             List<ObjectPlusPlus> allLinks = GetLinks(Role.ScheduleConnection).ToList();
             Connection connection = (Connection) allLinks.First();
             return "Schedule for " + connection;
         }
-
         public static Schedule CreateSchedule(Connection connection)
         {
             if(connection == null)
