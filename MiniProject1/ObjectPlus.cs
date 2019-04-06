@@ -65,6 +65,10 @@ namespace MiniProject1
         //Odczytuje ekstensję z pliku.
         public static void ReadExtensions() 
         {
+            if(!File.Exists(FileName))
+            {
+                throw new Exception(FileName + " does not exists");
+            }
             //Towrzy obiekt formatujący grafy obiektów do deserializacji oraz strumień z pliku
             IFormatter formatter = new BinaryFormatter();
             Stream input = new FileStream(FileName, FileMode.Open, FileAccess.Read);
