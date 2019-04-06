@@ -14,19 +14,6 @@ namespace MiniProject1
         public string Country { get; }
         public string PostalCode { get; }
 
-        public string FullAddress
-        {
-            get
-            {
-                string temp;
-                if (FlatNumber == null)
-                    temp = StreetNumber;
-                else
-                    temp = StreetNumber + "\\" + FlatNumber;
-                return String.Format("{0} {1}\n{2} {3}\n{4}", StreetName, temp, City, PostalCode, Country);
-            }
-        }
-
         public Address(string streetName, string streetNumber, string city, string country, string postalCode)
         {
             StreetName = streetName ?? throw new ArgumentNullException(nameof(streetName));
@@ -39,6 +26,15 @@ namespace MiniProject1
         public Address(string streetName, string streetNumber, string flatNumber, string city, string country, string postalCode) : this(streetName, streetNumber, city, country, postalCode)
         {
             FlatNumber = flatNumber?? throw new ArgumentNullException(nameof(postalCode));
+        }
+        public override string ToString()
+        {
+            string temp;
+            if (FlatNumber == null)
+                temp = StreetNumber;
+            else
+                temp = StreetNumber + "\\" + FlatNumber;
+            return String.Format("{0} {1}\n{2} {3}\n{4}", StreetName, temp, City, PostalCode, Country);
         }
     }
 }

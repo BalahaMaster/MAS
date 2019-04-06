@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MiniProject1
 {
@@ -10,16 +11,11 @@ namespace MiniProject1
         public Address SenderAddress { get; set; } //Atrybut złożony
         public Address PickupAddress { get; set; } //Atrybut złożony
         public List<Consignment> Consignments { get; set; } //Atrybut powtarzalny
-        public double Cost
+        public double Cost // Atrybut pochodny
         {
             get
             {
-                double cost = 0.0;
-                foreach(Consignment c in Consignments)
-                {
-                    cost += c.Price;
-                }
-                return cost;
+                return Consignments.Sum(x => x.Price);
             }
         }
 
