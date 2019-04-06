@@ -47,8 +47,6 @@ namespace MiniProject1
             ObjectPlus.ShowExtension(typeof(Shipment)); //Przeciążenie metody ShowExtension() z klasy Object plus
 
             Consignment.PriceModifier = 1.7; //Zmiana wartości atrybutu klasowego 
-
-
             
         }
     }
