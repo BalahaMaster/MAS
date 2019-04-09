@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MiniProject2
 {
-        public enum Role 
+    public enum Role 
     {
         None,
         ShipmentSenderAddress,
@@ -14,17 +14,17 @@ namespace MiniProject2
         ConnectionEndAddress,
         Shipment_Execution, Execution_Shipment,
         Connection_Execution, Execution_Connection,
-        ShipmentContainsConsignments, ConsignmentsContainedByShipment,
+        Schedule_DatePair, DatePair_Schedule,
         ConnectionShedule, ScheduleConnection,
 
     }
     [Serializable]
     public class ObjectPlusPlus : ObjectPlus
     {
-        private static List<Association> LegalAssociations { get; private set; } 
+        public static List<Association> LegalAssociations { get; private set; } 
         private Dictionary<Role, Dictionary<object, ObjectPlusPlus>> Links { get; set; } = new Dictionary<Role, Dictionary<object, ObjectPlusPlus>>();
         private static HashSet<ObjectPlusPlus> AllParts { get; set; } = new HashSet<ObjectPlusPlus>();
-        private void AddLink(Association association, ObjectPlusPlus linkedObject, int counter)
+        private void AddLink(Association association, ObjectPlusPlus linkedObject, object qualifier, int counter)
         {
             if (counter < 1)
             {
@@ -55,10 +55,6 @@ namespace MiniProject2
             if (!roleLinks.ContainsKey(linkedObject))
             {
                 Association reverseAssociation = association.GetReversedAssociation();
-                if(reverseAssociation == null)
-                {
-                    return;
-                }
                 switch (association.EndMultiplicityLimit) 
                 {
                     case -1:
@@ -86,6 +82,10 @@ namespace MiniProject2
                         break;
                 }
             }
+        }
+        private void AddLink(Association association, ObjectPlusPlus linkedObject, int counter)
+        {
+            AddLink(association, linkedObject, linkedObject, counter);
         }
 
         public void AddLink(Association association, ObjectPlusPlus linkedObject)
@@ -156,9 +156,11 @@ namespace MiniProject2
             if(!Links.ContainsKey(role))
             {
                 System.Console.WriteLine("There are no links for this role");
+                return;
             }
             System.Console.WriteLine("{0} '{1}' links for role {2}", this.GetType(), this, role);
-            foreach(KeyValuePair<object, ObjectPlusPlus> d in Links[role])
+            Dictionary<object, ObjectPlusPlus> roleLinks = Links[role];
+            foreach(KeyValuePair<object, ObjectPlusPlus> d in roleLinks)
             {
                 System.Console.WriteLine(d.Value);        
             }
@@ -178,7 +180,7 @@ namespace MiniProject2
             AddAssociation(c_sc);
             AddAssociation(c_sc.CreateReversedAssociation());
 
-            Association shi_cons = new Association(typeof(Shipment), 1, typeof(Consignment), -1, Role.ShipmentContainsConsignments, Role.ConsignmentsContainedByShipment);
+            Association shi_cons = new Association(typeof(Shipment), 1, typeof(Consignment), -1, Role.Schedule_DatePair, Role.DatePair_Schedule);
             AddAssociation(shi_cons);
             AddAssociation(shi_cons.CreateReversedAssociation());
 

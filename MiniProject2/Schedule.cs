@@ -7,11 +7,10 @@ namespace MiniProject2
 {
     public class Schedule : ObjectPlusPlus
     {
-        public Dictionary<DateTime, DateTime> Etd_Eta { get; set; } 
+        public Dictionary<int, DatePair> Dates { get; set; } 
         private Schedule() : base()
         {
-            Etd_Eta = new Dictionary<DateTime, DateTime>();
-            AddPart(GetAssociation(Role.ScheduleConnection), this);
+            Dates = new Dictionary<int, DatePair>();
         }
         public override string ToString()
         {
@@ -25,7 +24,13 @@ namespace MiniProject2
             {
                 throw new Exception("Cannot create schedule for not existing Connection");
             }
-            return new Schedule();
+            if(connection.GetLinks(Role.ConnectionShedule).Count() != 0)
+            {
+                throw new Exception("Connection already has a schedule");
+            }
+            Schedule result = new Schedule();
+            connection.AddPart(GetAssociation(Role.ConnectionShedule), result);
+            return result;
         }
     }
 }

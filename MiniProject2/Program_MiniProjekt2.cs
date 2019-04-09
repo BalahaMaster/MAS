@@ -11,41 +11,38 @@ namespace MiniProject2
             ObjectPlusPlus.DefineAssociations();
 
             Shipment sh1 = new Shipment("Shipment 1");
-            Shipment sh2 = new Shipment("Shipment 2");
 
             Address add1 = new Address("Liliowa", "25A", "Warszawa", "Polska", "05-666"); 
             Address add2 = new Address("Tulipanowa", "2", "9", "Olsztyn", "Polska", "21-370");
             Address add3 = new Address("Kasztanowa", "13", "Płock", "Polska", "01-234");
 
-            sh1.AddLink(ObjectPlusPlus.GetAssociation(Role.ShipmentPickupAddress), add2); // asocjacja binarna skierowana
+            sh1.AddLink(ObjectPlusPlus.GetAssociation(Role.ShipmentPickupAddress), add3); // asocjacja binarna skierowana
             sh1.AddLink(ObjectPlusPlus.GetAssociation(Role.ShipmentSenderAddress), add1); 
 
-            Connection c1 = new Connection("Warszawa-Płock", 120);
-            c1.AddLink(c1.GetAssociation(Role.ConnectionStartAddress), add1);
-            c1.AddLink(c1.GetAssociation(Role.ConnectionEndAddress), add3);
-            Connection c2 = new Connection("Płock-Olsztyn", 220);
-            c2.AddLink(c1.GetAssociation)
-            c2.EndAddress = add2;
-            Connection c3 = new Connection("Płock-Warszawa", 120);
-            c3.StartAddress = add3;
-            c3.EndAddress = add1;
+            sh1.ShowLinks(Role.ShipmentPickupAddress);
+            sh1.ShowLinks(Role.ShipmentSenderAddress);
 
-            List<Execution> execs = new List<Execution>()
-            {
-                new Execution(new DateTime(), new DateTime()),
-                new Execution(new DateTime(), new DateTime())
-            }; 
+            Connection c1 = new Connection("Warszawa-Płock", 110);
+            c1.AddLink(ObjectPlusPlus.GetAssociation(Role.ConnectionStartAddress), add1);
+            c1.AddLink(ObjectPlusPlus.GetAssociation(Role.ConnectionEndAddress), add3);
 
-            c1.Executions.Add(new Execution(new DateTime(), new DateTime()));
-            c1.ShowLinks(Role.Connection_Execution);
-            c1.Executions = execs;
-            c1.ShowLinks(Role.Connection_Execution);
-
-            c1.CreateSchedule();
-            c1.Schedule.Etd_Eta.Add(new DateTime(), new DateTime());
-            c1.Schedule.ShowLinks(Role.ScheduleConnection);
+            Schedule sch1 = Schedule.CreateSchedule(c1); // kompozycja
             c1.ShowLinks(Role.ConnectionShedule);
-            c1.CreateSchedule();
+            sch1.ShowLinks(Role.ScheduleConnection);
+
+            Connection c2 = new Connection("Płock-Olsztyn", 180);
+            c2.AddLink(ObjectPlusPlus.GetAssociation(Role.ConnectionStartAddress), add3);
+            c2.AddLink(ObjectPlusPlus.GetAssociation(Role.ConnectionEndAddress), add2);
+
+            Schedule sch2 = Schedule.CreateSchedule(c2);
+
+            DatePair dp1 = new DatePair(new DateTime(2019,4,20,11,0,0), new DateTime(2019,4,20,13,0,0));
+            DatePair dp2 = new DatePair(new DateTime(2019,4,20,18,0,0), new DateTime(2019,4,20,21,0,0));
+
+            sch1.AddLink(ObjectPlusPlus.GetAssociation(Role.Schedule_DatePair), dp1);
+            sch2.AddLink(ObjectPlusPlus.GetAssociation(Role.Schedule_DatePair), dp2);
+
+            Execution e1 = new Execution(sch1.Etd_Eta)
 
 
             //Execution exe1 = new Execution(new DateTime(2019, 04, 26, 10, 0, 0), new DateTime(2019, 04, 26, 6, 0, 0)); // Asocjacja z atrybutem pomiędzy shipment i connection
