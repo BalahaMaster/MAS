@@ -42,6 +42,14 @@ namespace MiniProject2
             {
                 throw new Exception("Association is not legal");
             }
+            if(this.GetType() != association.StartClassifier)
+            {
+                throw new Exception("This object type is not correct");
+            }
+            if(linkedObject.GetType() != association.EndClassifier)
+            {
+                throw new Exception("Linked object type is not correct");
+            }
             Dictionary<object, ObjectPlusPlus> roleLinks;
             if (Links.ContainsKey(association.Role))
             {
@@ -58,10 +66,10 @@ namespace MiniProject2
                 switch (association.EndMultiplicityLimit) 
                 {
                     case -1:
-                        roleLinks.Add(linkedObject, linkedObject);
+                        roleLinks.Add(qualifier, linkedObject);
                         if(reverseAssociation != null)
                         {
-                            linkedObject.AddLink(reverseAssociation, this, counter - 1);
+                            linkedObject.AddLink(reverseAssociation, this, this, counter - 1);
                         }
                         break;
                     case 0:
@@ -69,30 +77,28 @@ namespace MiniProject2
                         {
                             throw new Exception("Multiplicity limit has been reached");
                         }
-                        roleLinks.Add(linkedObject, linkedObject);
-                        linkedObject.AddLink(reverseAssociation, this, counter - 1);
+                        roleLinks.Add(qualifier, linkedObject);
+                        linkedObject.AddLink(reverseAssociation, this, this, counter - 1);
                         break;
                     default: 
                         if(roleLinks.Count >= association.EndMultiplicityLimit)
                         {
                             throw new Exception("Multiplicity limit has been reached");  
                         }
-                        roleLinks.Add(linkedObject, linkedObject);
-                        linkedObject.AddLink(reverseAssociation, this, counter - 1);
+                        roleLinks.Add(qualifier, linkedObject);
+                        linkedObject.AddLink(reverseAssociation, this, this, counter - 1);
                         break;
                 }
             }
         }
-        private void AddLink(Association association, ObjectPlusPlus linkedObject, int counter)
+        public void AddLink(Association association, ObjectPlusPlus linkedObject, object qualifier)
         {
-            AddLink(association, linkedObject, linkedObject, counter);
+            AddLink(association, linkedObject, qualifier, 2);
         }
-
         public void AddLink(Association association, ObjectPlusPlus linkedObject)
         {
-            AddLink(association, linkedObject, 2);
+            AddLink(association, linkedObject, linkedObject, 2);
         }
-
         public void AddPart(Association association, ObjectPlusPlus partObject)
         {
             if(AllParts.Contains(partObject))
@@ -117,7 +123,6 @@ namespace MiniProject2
                 LegalAssociations.Add(association);
             }
         }
-
         public static Association GetAssociation(Role role)
         {
             Association ass = LegalAssociations.First(x => x.Role.Equals(role));
@@ -127,7 +132,6 @@ namespace MiniProject2
             }
             return ass;
         }
-
         public ObjectPlusPlus[] GetLinks(Role role)
         {
             List<ObjectPlusPlus> roleLinks = new List<ObjectPlusPlus>();
@@ -137,7 +141,6 @@ namespace MiniProject2
             }
             return roleLinks.ToArray();
         }
-
         public ObjectPlusPlus GetLinknedObject(Role role, Object qualifier)
         {
             if(!Links.ContainsKey(role))
@@ -150,7 +153,6 @@ namespace MiniProject2
             }
             return Links[role][qualifier];
         }
-        
         public void ShowLinks(Role role)
         {
             if(!Links.ContainsKey(role))
@@ -180,7 +182,7 @@ namespace MiniProject2
             AddAssociation(c_sc);
             AddAssociation(c_sc.CreateReversedAssociation());
 
-            Association shi_cons = new Association(typeof(Shipment), 1, typeof(Consignment), -1, Role.Schedule_DatePair, Role.DatePair_Schedule);
+            Association shi_cons = new Association(typeof(Schedule), 1, typeof(DatePair), -1, Role.Schedule_DatePair, Role.DatePair_Schedule);
             AddAssociation(shi_cons);
             AddAssociation(shi_cons.CreateReversedAssociation());
 

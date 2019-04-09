@@ -6,30 +6,44 @@ using System.Text;
 namespace MiniProject2
 {
     public class Execution : ObjectPlusPlus
-    {
-       public DateTime ATA { get; set; }
-        public DateTime ATD { get; set; }
-        public DateTime ETA { get; set; }
-        public DateTime ETD { get; set; }
-        public Execution(DateTime etd, DateTime eta, DateTime atd, DateTime ata) : this(etd, eta)
+    {   
+        public string Name { get; set; }
+        public DatePair Estimated { get; set; }
+        public DatePair Actual { get; set; }
+        public Execution(string name, DatePair actual, DatePair estimated) : this(name, estimated)
         {
-            ATA = ata;
-            ATD = atd;
+            Actual = actual;
         }
-        public Execution(DateTime etd, DateTime eta) : base()
+        public Execution(string name, DatePair estimated) : base()
         {
-            ETA = eta;
-            ETD = etd;
+            Name = name;
+            Estimated = estimated;
         }
         public override string ToString()
         {
-            return String.Format(
-                "Execution Dates\nATD: {0}\nATA: {1}\nETD: {2}\nETA: {3}", 
-                ATD.ToString().Equals(DateTime.MinValue.ToString()) ? "" : ATD.ToString(), 
-                ATA.ToString().Equals(DateTime.MinValue.ToString()) ? "" : ATA.ToString(), 
-                ETD.ToString().Equals(DateTime.MinValue.ToString()) ? "" : ETD.ToString(), 
-                ETA.ToString().Equals(DateTime.MinValue.ToString()) ? "" : ETA.ToString()
-                );
+            String result = Name + " execution Dates:\n";
+            if(Estimated != null)
+            {   
+                result += String.Format("ETD: {0}\nETA: {1}\n",
+                    Estimated.Departure.ToString().Equals(DateTime.MinValue.ToString()) ? "" : Estimated.Departure.ToString(), 
+                    Estimated.Arrival.ToString().Equals(DateTime.MinValue.ToString()) ? "" : Estimated.Arrival.ToString());
+            }
+            if(Actual != null)
+            {
+                result += String.Format("ATD: {0}\nATA: {1}\n",
+                    Actual.Departure.ToString().Equals(DateTime.MinValue.ToString()) || Actual == null ? "" : Actual.Departure.ToString(), 
+                    Actual.Arrival.ToString().Equals(DateTime.MinValue.ToString()) || Actual == null ? "" : Actual.Arrival.ToString());
+            }
+            return result;
+        }
+        public void AddLinks(Shipment shipment, Connection connection)
+        {
+            if(shipment == null || connection == null)
+            {
+                throw new Exception("Shipment or Connection cannot be null");
+            }
+            AddLink(ObjectPlusPlus.GetAssociation(Role.Execution_Shipment), shipment);
+            AddLink(ObjectPlusPlus.GetAssociation(Role.Execution_Connection), connection);
         }
     }
 }

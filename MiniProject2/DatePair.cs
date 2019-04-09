@@ -5,20 +5,20 @@ namespace MiniProject2
 {
     public class DatePair : ObjectPlusPlus
     {
-        public DateTime ETD { get; set; }
-        public DateTime ETA { get; set; }
-        public DatePair(DateTime etd, DateTime eta)
+        public DateTime Departure { get; set; }
+        public DateTime Arrival { get; set; }
+        public DatePair(DateTime departure, DateTime arrival)
         {
-            if(etd == null || eta == null)        
+            if(departure == null || arrival == null)        
             {
                 throw new Exception("ETA and ETD cannot be null");
             }
-            if(etd > eta)
+            if(departure > arrival)
             {
                 throw new Exception("ETA must be later than ETD");
             }
-            ETD = etd;
-            ETA = eta;
+            Departure = departure;
+            Arrival = arrival;
         }
-    }
+    } 
 }

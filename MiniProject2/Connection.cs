@@ -14,10 +14,6 @@ namespace MiniProject2
             Name = name;
             Distance = distance;
         }
-        public void CreateSchedule()
-        {
-            Schedule.CreateSchedule(this);
-        }
         public override string ToString() 
         {
             return Name;
