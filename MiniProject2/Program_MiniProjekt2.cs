@@ -8,6 +8,7 @@ namespace MiniProject2
     {
         static void Main(string[] args)
         {
+            // zdefiniowanie assocjacji dla programu
             ObjectPlusPlus.DefineAssociations();
 
             Shipment sh1 = new Shipment("Shipment 1");
@@ -26,7 +27,7 @@ namespace MiniProject2
             c1.AddLink(ObjectPlusPlus.GetAssociation(Role.ConnectionStartAddress), add1);
             c1.AddLink(ObjectPlusPlus.GetAssociation(Role.ConnectionEndAddress), add3);
 
-            Schedule sch1 = Schedule.CreateSchedule(c1, "Schedule for " + c1.Name); // kompozycja
+            Schedule sch1 = Schedule.CreateSchedule(c1, "Schedule for " + c1.Name); // Kompozycja
             c1.ShowLinks(Role.ConnectionShedule);
             sch1.ShowLinks(Role.ScheduleConnection);
 
@@ -45,8 +46,8 @@ namespace MiniProject2
             Execution exe1 = new Execution("Execution 1", (DatePair) sch1.GetLinknedObject(Role.Schedule_DatePair, "Estimated 1"));
             Execution exe2 = new Execution("Execution 2", (DatePair) sch2.GetLinknedObject(Role.Schedule_DatePair, "Estimated 2"));
 
-            exe1.AddLinks(sh1, c1);
-            exe2.AddLinks(sh1, c2);
+            exe1.AddLinks(sh1, c1); //Asocjacja z atrybutem pomiędzy shipment i connection
+            exe2.AddLinks(sh1, c2); //Asocjacja z atrybutem pomiędzy shipment i connection
 
             sh1.ShowLinks(Role.Shipment_Execution);
             c1.ShowLinks(Role.Connection_Execution);
