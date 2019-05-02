@@ -16,6 +16,7 @@ namespace MiniProject2
         {
             return Name;
         }
+        // Implementacja kompozycji - metoda odpowiedzialna za stworzenie obiektu części 'Schedule' po podaniu obiektu całości 'Connection'
         public static Schedule CreateSchedule(Connection connection, string name)
         {
             if(connection == null)

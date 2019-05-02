@@ -7,11 +7,17 @@ namespace MiniProject2
 {
     public class Association
     {
+        // Typ obiektu 'tego' obiektu
         public Type StartClassifier { get; set; }
+        // Liczność po stronie 'tego' obiektu
         public int StartMultiplicityLimit { get; set; }
+        // Typ obietku, z którym chcemy połączyć 'ten' obiekt
         public Type EndClassifier { get; set; }
+        // Licznośc obiektu, z którym chcemy połączyć 'ten' obiekt
         public int EndMultiplicityLimit { get; set; }
+        // Rola tej asocjacji
         public Role Role { get; set; }
+        // Rola asocjacji zwrotnej
         public Role ReverseRole { get; set; }
         public Association(Type startClassifier, Type endClassifier, int endMultiplicityLimit, Role role)
         {

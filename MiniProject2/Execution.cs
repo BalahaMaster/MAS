@@ -7,21 +7,20 @@ namespace MiniProject2
 {
     public class Execution : ObjectPlusPlus
     {   
-        public string Name { get; set; }
+        // Implementacja asocjacji z atrybutem - Atrybuty asocjacji.
         public DatePair Estimated { get; set; }
         public DatePair Actual { get; set; }
-        public Execution(string name, DatePair actual, DatePair estimated) : this(name, estimated)
+        public Execution(DatePair actual, DatePair estimated) : this(estimated)
         {
             Actual = actual;
         }
-        public Execution(string name, DatePair estimated) : base()
+        public Execution(DatePair estimated) : base()
         {
-            Name = name;
             Estimated = estimated;
         }
         public override string ToString()
         {
-            String result = Name + " execution Dates:\n";
+            String result = "Execution Dates:\n";
             if(Estimated != null)
             {   
                 result += String.Format("ETD: {0}\nETA: {1}\n",
@@ -36,6 +35,7 @@ namespace MiniProject2
             }
             return result;
         }
+        // Implementacja asocjacji z atrybutem - Metoda dodaje asocjację pomiędzy obiektami 'Shipment' i 'Connection'.
         public void AddLinks(Shipment shipment, Connection connection)
         {
             if(shipment == null || connection == null)

@@ -43,8 +43,8 @@ namespace MiniProject2
             sch1.AddLink(ObjectPlusPlus.GetAssociation(Role.Schedule_DatePair), dp1, "Estimated 1"); // Asocjacja kwalifikowana
             sch2.AddLink(ObjectPlusPlus.GetAssociation(Role.Schedule_DatePair), dp2, "Estimated 2"); // Asocjacja kwalifikowana
             
-            Execution exe1 = new Execution("Execution 1", (DatePair) sch1.GetLinknedObject(Role.Schedule_DatePair, "Estimated 1"));
-            Execution exe2 = new Execution("Execution 2", (DatePair) sch2.GetLinknedObject(Role.Schedule_DatePair, "Estimated 2"));
+            Execution exe1 = new Execution((DatePair) sch1.GetLinknedObject(Role.Schedule_DatePair, "Estimated 1"));
+            Execution exe2 = new Execution((DatePair) sch2.GetLinknedObject(Role.Schedule_DatePair, "Estimated 2"));
 
             exe1.AddLinks(sh1, c1); //Asocjacja z atrybutem pomiędzy shipment i connection
             exe2.AddLinks(sh1, c2); //Asocjacja z atrybutem pomiędzy shipment i connection
