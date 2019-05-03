@@ -7,9 +7,26 @@ namespace MiniProject3
     public class Warrior : ObjectPlusPlus
     {
         public string Speciality { get; set; }
-        public Warrior(string speciality) 
+        private Warrior(string speciality) 
         {
             Speciality = speciality ?? throw new ArgumentNullException(nameof(speciality));
+        }
+        public static Warrior Create(Profession p, string speciality)
+        {
+            if (p == null)
+            {
+                throw new Exception("Cannot create Warrior for not existing Profession");
+            }
+            Warrior w = new Warrior(speciality);
+            try
+            {
+                p.AddPart(GetAssociation(Role.Profession_Warrior), w);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return w;
         }
     }
 }
