@@ -11,7 +11,6 @@ namespace MiniProject3
         {
             Spells = spells ?? throw new ArgumentNullException(nameof(spells));
         }
-
         public static Mage Create(Profession p, List<string> spells)
         {            
             if (p == null)
@@ -21,11 +20,12 @@ namespace MiniProject3
             Mage m = new Mage(spells);
             try
             {
+                // Dodanie obiektu Mage jako części 
                 p.AddPart(GetAssociation(Role.Profession_Mage), m);
             }
             catch(Exception e)
             {
-                return null;
+                throw new Exception("Couldn't create a MAge: " + e);
             }
             return m;
         }

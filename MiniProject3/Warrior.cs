@@ -20,11 +20,12 @@ namespace MiniProject3
             Warrior w = new Warrior(speciality);
             try
             {
+                // Dodanie obiektu Warrior jako częsci
                 p.AddPart(GetAssociation(Role.Profession_Warrior), w);
             }
             catch (Exception e)
             {
-                return null;
+                throw new Exception("Couldn't create a Warrior: " + e);
             }
             return w;
         }

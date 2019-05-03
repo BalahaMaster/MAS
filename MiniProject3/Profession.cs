@@ -24,39 +24,40 @@ namespace MiniProject3
         }
         private void AddWarrior(string speciality)
         {
-            Warrior w = Warrior.Create(this, speciality);
-            if(w != null)
+            try
             {
+                Warrior w = Warrior.Create(this, speciality);
                 Console.WriteLine("Warrior was created");
             }
-            else
+            catch(Exception e)
             {
-                Console.WriteLine("This profession is already a warrior");
+                Console.WriteLine("Warrior was not created: " + e);
             }
+            
         }
         private void AddMage(List<string> spells)
         {
-            Mage m = Mage.Create(this, spells);
-            if(m != null)
+            try
             {
+                Mage m = Mage.Create(this, spells);
                 Console.WriteLine("Mage was created");
             }
-            else
+            catch(Exception e)
             {
-                Console.WriteLine("This profession is already a mage");
+                Console.WriteLine("Mage was not created: " + e);
             }
         }
         public string GetSpells()
         {
             List<ObjectPlusPlus> list = GetLinks(Role.Profession_Mage);
             Mage m = (Mage)list.FirstOrDefault();
-            if (list != null)
+            if (m != null)
             {
-                return String.Join("\n", m.Spells);
+                return "Czary:\n" + String.Join("\n", m.Spells);
             }
             else
             {
-                throw new Exception("This Profession is not a Mage");
+                return ("Ta profesja nie posaida czarów ponieważ nie jest Magiem.");
             }
         }
         public string GetSpeciality()
@@ -65,11 +66,11 @@ namespace MiniProject3
             Warrior w = (Warrior)list.FirstOrDefault();
             if (list != null)
             {
-                return w.Speciality;
+                return "Specjalność:\n" + w.Speciality;
             }
             else
             {
-                throw new Exception("This Profession is not a Warrior");
+                return ("Ta profesja nie posiada specjalności ponieważ nie jest wojownikiem");
             }
         }
     }
