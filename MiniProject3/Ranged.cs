@@ -8,14 +8,10 @@ namespace MiniProject3
     {
         public double Range { get; set; }
         public double Accuracy { get; set; }
-        public Ranged(string name, int damage, double weight, double range, double accuracy) : base(name, damage, weight)
+        public Ranged(string name, int damage, double weight, WeaponKind kind, double range, double accuracy) : base(name, damage, weight, kind)
         {
             Range = range;
             Accuracy = accuracy;
-        }
-        public override double GetRange()
-        {
-            return Range;
         }
     }
 }

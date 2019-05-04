@@ -4,7 +4,8 @@ using System.Text;
 
 namespace MiniProject3
 {
-    public abstract class Shape
+    public abstract class WeaponKind : ObjectPlusPlus
     {
+        public abstract void ShowBonus();
     }
 }

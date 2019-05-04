@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiniProject3
 {
-    public class Edged : Shape
+    public class Edged : WeaponKind
     {
         public string Blade { get; set; }
         public double ExsanguinationChance { get; set; }
@@ -12,6 +12,11 @@ namespace MiniProject3
         {
             Blade = blade ?? throw new ArgumentNullException(nameof(blade));
             ExsanguinationChance = exsanguinationChance;
+        }
+
+        public override void ShowBonus()
+        {
+            Console.WriteLine($"Exsanguination chance: {ExsanguinationChance}%");
         }
     }
 }

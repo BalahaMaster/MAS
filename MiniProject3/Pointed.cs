@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiniProject3
 {
-    public class Pointed : Shape
+    public class Pointed : WeaponKind
     {
         public string Tip { get; set; }
         public double PiercingChance { get; set; }
@@ -13,6 +13,11 @@ namespace MiniProject3
         {
             Tip = tip ?? throw new ArgumentNullException(nameof(tip));
             PiercingChance = piercingChance;
+        }
+
+        public override void ShowBonus()
+        {
+            Console.WriteLine($"Piercing chance: {PiercingChance}%" );
         }
     }
 }

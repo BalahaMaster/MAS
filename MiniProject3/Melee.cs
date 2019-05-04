@@ -9,15 +9,10 @@ namespace MiniProject3
         public double Lenght { get; set; }
         public string Material { get; set; }
 
-        public Melee(string name, int damage, double weight, double lenght, string material) : base(name, damage, weight)
+        public Melee(string name, int damage, double weight, WeaponKind kind, double lenght, string material) : base(name, damage, weight, kind)
         {
             Lenght = lenght;
             Material = material;
-        }
-
-        public override double GetRange()
-        {
-            return Lenght;
         }
     }
 }
