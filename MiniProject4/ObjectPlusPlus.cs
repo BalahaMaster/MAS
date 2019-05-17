@@ -8,15 +8,10 @@ namespace MiniProject4
     public enum Role 
     {
         None,
-        ShipmentSenderAddress,
-        ShipmentPickupAddress,
-        ConnectionStartAddress,
-        ConnectionEndAddress,
-        Shipment_Execution, Execution_Shipment,
-        Connection_Execution, Execution_Connection,
-        Schedule_DatePair, DatePair_Schedule,
-        ConnectionShedule, ScheduleConnection,
-
+        Player_Team, Team_Player,
+        Leader_Team, Team_Leader,
+        Player_Performance, Performance_Player,
+        Team_Performance, Performance_Team
     }
     [Serializable]
     public class ObjectPlusPlus : ObjectPlus
@@ -183,26 +178,22 @@ namespace MiniProject4
         }
         public static void DefineAssociations()
         {
-            AddAssociation(new Association(typeof(Shipment), typeof(Address), 1, Role.ShipmentSenderAddress));
-            AddAssociation(new Association(typeof(Shipment), typeof(Address), 1, Role.ShipmentPickupAddress));
-            AddAssociation(new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionStartAddress));
-            AddAssociation(new Association(typeof(Connection), typeof(Address), 1, Role.ConnectionEndAddress));
-
-            Association s_sc = new Association(typeof(Shipment), 1, typeof(Execution), -1, Role.Shipment_Execution, Role.Execution_Shipment);
+            Association s_sc = new Association(typeof(Player), 1, typeof(Team), -1, Role.Player_Team, Role.Team_Player);
             AddAssociation(s_sc);
             AddAssociation(s_sc.CreateReversedAssociation());
 
-            Association c_sc = new Association(typeof(Connection), 1, typeof(Execution), -1, Role.Connection_Execution, Role.Execution_Connection);
+            Association c_sc = new Association(typeof(Player), 1, typeof(Team), 1, Role.Leader_Team, Role.Team_Leader);
             AddAssociation(c_sc);
             AddAssociation(c_sc.CreateReversedAssociation());
 
-            Association shi_cons = new Association(typeof(Schedule), 1, typeof(DatePair), -1, Role.Schedule_DatePair, Role.DatePair_Schedule);
-            AddAssociation(shi_cons);
-            AddAssociation(shi_cons.CreateReversedAssociation());
+            Association pl_pr = new Association(typeof(Player), 1, typeof(Performance), 1, Role.Player_Performance, Role.Performance_Player);
+            AddAssociation(pl_pr);
+            AddAssociation(pl_pr.CreateReversedAssociation());
 
-            Association con_sch = new Association(typeof(Connection), 1, typeof(Schedule), 1, Role.ConnectionShedule, Role.ScheduleConnection);
-            AddAssociation(con_sch);
-            AddAssociation(con_sch.CreateReversedAssociation());
+            Association t_pr = new Association(typeof(Team), 1, typeof(Performance), 1, Role.Team_Performance, Role.Performance_Team);
+            AddAssociation(t_pr);
+            AddAssociation(t_pr.CreateReversedAssociation());
+
         }
     }
 }
