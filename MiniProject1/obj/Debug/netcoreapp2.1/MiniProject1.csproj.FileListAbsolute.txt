@@ -1,0 +1,11 @@
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\bin\Debug\netcoreapp2.1\MiniProject1.deps.json
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\bin\Debug\netcoreapp2.1\MiniProject1.runtimeconfig.json
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\bin\Debug\netcoreapp2.1\MiniProject1.runtimeconfig.dev.json
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\bin\Debug\netcoreapp2.1\MiniProject1.dll
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\bin\Debug\netcoreapp2.1\MiniProject1.pdb
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\obj\Debug\netcoreapp2.1\MiniProject1.csprojAssemblyReference.cache
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\obj\Debug\netcoreapp2.1\MiniProject1.csproj.CoreCompileInputs.cache
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\obj\Debug\netcoreapp2.1\MiniProject1.AssemblyInfoInputs.cache
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\obj\Debug\netcoreapp2.1\MiniProject1.AssemblyInfo.cs
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\obj\Debug\netcoreapp2.1\MiniProject1.dll
+C:\Users\marcin.karpiesiuk\PJATK\MAS\MAS\MiniProject1\obj\Debug\netcoreapp2.1\MiniProject1.pdb
