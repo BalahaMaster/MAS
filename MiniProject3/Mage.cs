@@ -25,7 +25,7 @@ namespace MiniProject3
             }
             catch(Exception e)
             {
-                throw new Exception("Couldn't create a Mage: " + e);
+                throw new Exception("Couldn't create a MAge: " + e);
             }
             return m;
         }

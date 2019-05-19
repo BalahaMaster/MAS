@@ -8,8 +8,7 @@ namespace MiniProject3
     public enum Role 
     {
         Profession_Warrior, Warrior_Profession,
-        Profession_Mage, Mage_Profession,
-        Weapone_WeaponKind, WeaponKind_Weapon
+        Profession_Mage, Mage_Profession
     }
     [Serializable]
     public class ObjectPlusPlus
@@ -184,10 +183,6 @@ namespace MiniProject3
             Association prof_mag = new Association(typeof(Profession), 1, typeof(Mage), 1, Role.Profession_Mage, Role.Mage_Profession);
             AddAssociation(prof_mag);
             AddAssociation(prof_mag.CreateReversedAssociation());
-
-            Association weap_shp = new Association(typeof(Weapon), 1, typeof(WeaponKind), 1, Role.Weapone_WeaponKind, Role.WeaponKind_Weapon);
-            AddAssociation(weap_shp);
-            AddAssociation(weap_shp.CreateReversedAssociation());
         }
     }
 }

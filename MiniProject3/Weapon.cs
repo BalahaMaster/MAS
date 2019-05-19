@@ -19,5 +19,10 @@ namespace MiniProject3
             Weight = weight;
             Kind = weaponKind;
         }
+
+        public void ShowBonus()
+        {
+            Kind.ShowBonus();
+        }
     }
 }
