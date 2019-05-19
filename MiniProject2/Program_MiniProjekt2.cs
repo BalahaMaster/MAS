@@ -51,7 +51,6 @@ namespace MiniProject2
 
             sh1.ShowLinks(Role.Shipment_Execution);
             c1.ShowLinks(Role.Connection_Execution);
-
         }
     }
 }

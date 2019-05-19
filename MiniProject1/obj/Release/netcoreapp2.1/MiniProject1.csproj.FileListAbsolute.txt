@@ -1,0 +1,11 @@
+C:\Users\marci\source\repos\MAS\MiniProject1\bin\Release\netcoreapp2.1\MiniProject1.deps.json
+C:\Users\marci\source\repos\MAS\MiniProject1\bin\Release\netcoreapp2.1\MiniProject1.runtimeconfig.json
+C:\Users\marci\source\repos\MAS\MiniProject1\bin\Release\netcoreapp2.1\MiniProject1.runtimeconfig.dev.json
+C:\Users\marci\source\repos\MAS\MiniProject1\bin\Release\netcoreapp2.1\MiniProject1.dll
+C:\Users\marci\source\repos\MAS\MiniProject1\bin\Release\netcoreapp2.1\MiniProject1.pdb
+C:\Users\marci\source\repos\MAS\MiniProject1\obj\Release\netcoreapp2.1\MiniProject1.csproj.CoreCompileInputs.cache
+C:\Users\marci\source\repos\MAS\MiniProject1\obj\Release\netcoreapp2.1\MiniProject1.AssemblyInfoInputs.cache
+C:\Users\marci\source\repos\MAS\MiniProject1\obj\Release\netcoreapp2.1\MiniProject1.AssemblyInfo.cs
+C:\Users\marci\source\repos\MAS\MiniProject1\obj\Release\netcoreapp2.1\MiniProject1.dll
+C:\Users\marci\source\repos\MAS\MiniProject1\obj\Release\netcoreapp2.1\MiniProject1.pdb
+C:\Users\marci\source\repos\MAS\MiniProject1\obj\Release\netcoreapp2.1\MiniProject1.csprojAssemblyReference.cache
